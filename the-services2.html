@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ViraCore — The Services</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root{
+    --black:#0A0A0A;
+    --white:#FFFFFF;
+    --gray:#6E6B65;
+    --line:#DEDAD2;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--white);
+    color:var(--black);
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* NAV */
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:28px 60px;
+    max-width:1400px;
+    margin:0 auto;
+  }
+  .logo{
+    font-weight:900;
+    font-size:20px;
+    letter-spacing:-0.01em;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--black);
+  }
+  .logo .dot{width:8px;height:8px;background:var(--black);border-radius:50%;display:inline-block;}
+    .logo-img{
+    height:40px;
+    width:auto;
+    display:block;
+  }
+  .nav-links{display:flex;gap:36px;list-style:none;}
+  .nav-links a{
+    color:var(--black);
+    text-decoration:none;
+    font-size:14px;
+    opacity:0.55;
+  }
+  .nav-links a.active{opacity:1;font-weight:700;}
+  .nav-links a:hover{opacity:1;}
+
+  /* HEADER */
+  .header{
+    max-width:1400px;
+    margin:0 auto;
+    padding:60px 60px 40px;
+  }
+  .eyebrow{
+    font-size:12px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--gray);
+    font-weight:700;
+    margin-bottom:20px;
+  }
+  .header h1{
+    font-size:clamp(38px, 4.5vw, 56px);
+    font-weight:900;
+    line-height:1.05;
+    letter-spacing:-0.01em;
+    max-width:640px;
+  }
+
+  .divider{
+    max-width:1400px;
+    margin:0 auto;
+    border-top:1px solid var(--line);
+  }
+
+  /* GRID */
+  .grid{
+    max-width:1400px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+  }
+  .cell{
+    padding:48px 44px 44px 44px;
+    border-bottom:1px solid var(--line);
+    border-right:1px solid var(--line);
+  }
+  .cell:nth-child(3n){border-right:none;}
+  .cell:nth-child(n+7){border-bottom:none;}
+
+  .icon{
+    width:44px;
+    height:44px;
+    margin-bottom:26px;
+    stroke:var(--black);
+    fill:none;
+    stroke-width:1.5;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  .cell h3{
+    font-size:18px;
+    font-weight:700;
+    letter-spacing:-0.005em;
+  }
+  .cell p{
+    margin-top:12px;
+    font-size:13.5px;
+    color:var(--gray);
+    line-height:1.6;
+  }
+
+  footer{
+    max-width:1400px;
+    margin:0 auto;
+    padding:50px 60px;
+    display:flex;
+    justify-content:space-between;
+    font-size:12px;
+    color:var(--gray);
+  }
+
+  @media (max-width:900px){
+    .grid{grid-template-columns:1fr;}
+    nav, .header, .divider, footer{padding-left:24px; padding-right:24px;}
+    .cell{padding:36px 24px; border-right:none !important;}
+  }
+  /* NAICS ACCORDION */
+  .naics{
+    background:var(--black);
+    padding:90px 60px 100px;
+  }
+  .naics-inner{max-width:1400px; margin:0 auto;}
+  .naics .eyebrow{
+    font-size:12px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:#8A867E;
+    font-weight:700;
+    margin-bottom:20px;
+  }
+  .naics h2{
+    font-size:clamp(32px, 3.6vw, 46px);
+    font-weight:900;
+    color:var(--white);
+    letter-spacing:-0.01em;
+    margin-bottom:48px;
+  }
+  .accordion{
+    border-top:1px solid rgba(255,255,255,0.15);
+  }
+  .acc-item{
+    border-bottom:1px solid rgba(255,255,255,0.15);
+  }
+  .acc-header{
+    width:100%;
+    background:none;
+    border:none;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:28px 4px;
+    cursor:pointer;
+    text-align:left;
+  }
+  .acc-header-left{
+    display:flex;
+    align-items:baseline;
+    gap:20px;
+  }
+  .acc-title{
+    font-size:19px;
+    font-weight:700;
+    color:var(--white);
+  }
+  .acc-codes{
+    font-size:13px;
+    color:#8A867E;
+    letter-spacing:0.02em;
+  }
+  .acc-icon{
+    width:20px;
+    height:20px;
+    stroke:var(--white);
+    fill:none;
+    stroke-width:1.6;
+    flex-shrink:0;
+    transition:transform 0.3s ease;
+  }
+  .acc-item.open .acc-icon{transform:rotate(45deg);}
+  .acc-panel{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.35s ease;
+  }
+  .acc-item.open .acc-panel{max-height:400px;}
+  .acc-panel-inner{
+    padding:0 4px 32px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:20px;
+  }
+  .code-card{
+    border:1px solid rgba(255,255,255,0.15);
+    padding:16px 18px;
+  }
+  .code-num{
+    font-size:15px;
+    font-weight:700;
+    color:var(--white);
+    margin-bottom:6px;
+  }
+  .code-desc{
+    font-size:13px;
+    color:#8A867E;
+    line-height:1.5;
+  }
+
+  @media (max-width:900px){
+    .naics{padding:60px 24px 80px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><img src="Black_NB.png" alt="ViraCore" class="logo-img"></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="the-services2.html" class="active">The Services</a></li>
+    <li><a href="the-story2.html">The Story</a></li>
+    <li><a href="the-purpose2.html">The Purpose</a></li>
+    <li><a href="the-contact2.html">The Contact</a></li>
+  </ul>
+</nav>
+
+<div class="header">
+  <div class="eyebrow">Our Services</div>
+  <h1>A comprehensive set of facilities &amp; vendor services</h1>
+</div>
+
+<div class="divider"></div>
+
+<div class="grid">
+
+  <div class="cell">
+    <svg class="icon" viewBox="0 0 48 48">
+      <path d="M22 6v22"/>
+      <path d="M15 8c0 4 3 7 7 7s7-3 7-7"/>
+      <path d="M22 28l-6 12h12z"/>
+      <path d="M14 40h16"/>
+    </svg>
+    <h3>Facilities &amp; Maintenance</h3>
+    <p>Janitorial, floor care, pest control, and waste removal to keep your space running clean.</p>
+  </div>
+
+  <div class="cell">
+    <svg class="icon" viewBox="0 0 48 48">
+      <rect x="9" y="14" width="22" height="15" rx="1"/>
+      <path d="M15 33h10"/>
+      <path d="M20 29v4"/>
+      <path d="M34 20h5v8h-5z"/>
+    </svg>
+    <h3>Office &amp; Workplace Services</h3>
+    <p>Furniture, supplies, signage, and consumables for a fully equipped workplace.</p>
+  </div>
+
+  <div class="cell">
+    <svg class="icon" viewBox="0 0 48 48">
+      <rect x="8" y="9" width="24" height="17" rx="1"/>
+      <path d="M16 32h8"/>
+      <path d="M20 26v6"/>
+      <circle cx="36" cy="30" r="6"/>
+      <path d="M36 27v3l2 2"/>
+    </svg>
+    <h3>Technology &amp; Equipment</h3>
+    <p>Secure IT disposal, e-waste recycling, and equipment procurement.</p>
+  </div>
+
+  <div class="cell">
+    <svg class="icon" viewBox="0 0 48 48">
+      <path d="M9 24l6-14h14l6 14"/>
+      <path d="M9 24v12a1 1 0 0 0 1 1h26a1 1 0 0 0 1-1V24"/>
+      <path d="M9 24h30"/>
+      <rect x="19" y="29" width="10" height="8"/>
+    </svg>
+    <h3>Property &amp; Operations Support</h3>
+    <p>Moving, storage, repairs, and grounds maintenance for any property.</p>
+  </div>
+
+  <div class="cell">
+    <svg class="icon" viewBox="0 0 48 48">
+      <rect x="5" y="19" width="19" height="12" rx="1"/>
+      <path d="M24 23h8l6 6v2h-14z"/>
+      <circle cx="13" cy="33" r="3"/>
+      <circle cx="33" cy="33" r="3"/>
+    </svg>
+    <h3>Logistics &amp; Supply</h3>
+    <p>Delivery, warehousing, fulfillment, and inventory management.</p>
+  </div>
+
+  <div class="cell">
+    <svg class="icon" viewBox="0 0 48 48">
+      <path d="M24 6l14 5v10c0 10-6 17-14 21-8-4-14-11-14-21V11z"/>
+      <path d="M17 24l5 5 10-10"/>
+    </svg>
+    <h3>Security Services</h3>
+    <p>Access control, patrol coordination, and personnel placement.</p>
+  </div>
+
+  <div class="cell">
+    <svg class="icon" viewBox="0 0 48 48">
+      <circle cx="17" cy="13" r="5"/>
+      <path d="M7 33v-3a10 10 0 0 1 20 0v3"/>
+      <circle cx="31" cy="16" r="4"/>
+      <path d="M27 33v-2a8 8 0 0 1 14-5"/>
+    </svg>
+    <h3>Staffing &amp; Labor Support</h3>
+    <p>On-demand labor and skilled tradespeople, sourced and placed fast.</p>
+  </div>
+
+  <div class="cell">
+    <svg class="icon" viewBox="0 0 48 48">
+      <path d="M13 18v-8h22v8"/>
+      <rect x="9" y="18" width="30" height="14" rx="1"/>
+      <path d="M13 26h22v10H13z"/>
+      <circle cx="33" cy="23" r="1.4" fill="var(--black)" stroke="none"/>
+    </svg>
+    <h3>Print &amp; Marketing Materials</h3>
+    <p>Branded signage, banners, and marketing collateral.</p>
+  </div>
+
+  <div class="cell">
+    <svg class="icon" viewBox="0 0 48 48">
+      <path d="M8 17l16-10 16 10-16 10z"/>
+      <path d="M8 17v12l16 10 16-10V17"/>
+      <path d="M24 27v11"/>
+    </svg>
+    <h3>Event Setup &amp; Support</h3>
+    <p>Setup, breakdown, and staffing for events of any size.</p>
+  </div>
+
+</div>
+
+<div class="naics">
+  <div class="naics-inner">
+    <h2>NAICS Codes</h2>
+
+    <div class="accordion">
+
+      <div class="acc-item">
+        <button class="acc-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-header-left">
+            <span class="acc-title">IT / Data Center Ops</span>
+            <span class="acc-codes">518210, 541513</span>
+          </div>
+          <svg class="acc-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <div class="acc-panel">
+          <div class="acc-panel-inner">
+            <div class="code-card">
+              <div class="code-num">518210</div>
+              <div class="code-desc">Computing Infrastructure Providers, Data Processing, Web Hosting, and Related Services</div>
+            </div>
+            <div class="code-card">
+              <div class="code-num">541513</div>
+              <div class="code-desc">Computer Facilities Management Services</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-header-left">
+            <span class="acc-title">Janitorial / Facility</span>
+            <span class="acc-codes">561720, 561790, 561210, 561740, 561710, 561730</span>
+          </div>
+          <svg class="acc-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <div class="acc-panel">
+          <div class="acc-panel-inner">
+            <div class="code-card">
+              <div class="code-num">561720</div>
+              <div class="code-desc">Janitorial Services</div>
+            </div>
+            <div class="code-card">
+              <div class="code-num">561790</div>
+              <div class="code-desc">Other Services to Buildings and Dwellings</div>
+            </div>
+            <div class="code-card">
+              <div class="code-num">561210</div>
+              <div class="code-desc">Facilities Support Services</div>
+            </div>
+            <div class="code-card">
+              <div class="code-num">561740</div>
+              <div class="code-desc">Carpet and Upholstery Cleaning Services</div>
+            </div>
+            <div class="code-card">
+              <div class="code-num">561710</div>
+              <div class="code-desc">Exterminating and Pest Control Services</div>
+            </div>
+            <div class="code-card">
+              <div class="code-num">561730</div>
+              <div class="code-desc">Landscaping Services</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-header-left">
+            <span class="acc-title">Security</span>
+            <span class="acc-codes">561612</span>
+          </div>
+          <svg class="acc-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <div class="acc-panel">
+          <div class="acc-panel-inner">
+            <div class="code-card">
+              <div class="code-num">561612</div>
+              <div class="code-desc">Security Guards and Patrol Services</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-header-left">
+            <span class="acc-title">ITAD / E-Waste</span>
+            <span class="acc-codes">562920, 562111, 562112</span>
+          </div>
+          <svg class="acc-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <div class="acc-panel">
+          <div class="acc-panel-inner">
+            <div class="code-card">
+              <div class="code-num">562920</div>
+              <div class="code-desc">Materials Recovery Facilities</div>
+            </div>
+            <div class="code-card">
+              <div class="code-num">562111</div>
+              <div class="code-desc">Solid Waste Collection</div>
+            </div>
+            <div class="code-card">
+              <div class="code-num">562112</div>
+              <div class="code-desc">Hazardous Waste Collection</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-header-left">
+            <span class="acc-title">Logistics / Warehousing</span>
+            <span class="acc-codes">484210, 493110</span>
+          </div>
+          <svg class="acc-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <div class="acc-panel">
+          <div class="acc-panel-inner">
+            <div class="code-card">
+              <div class="code-num">484210</div>
+              <div class="code-desc">Used Household and Office Goods Moving</div>
+            </div>
+            <div class="code-card">
+              <div class="code-num">493110</div>
+              <div class="code-desc">General Warehousing and Storage</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-header-left">
+            <span class="acc-title">Staffing</span>
+            <span class="acc-codes">561320, 561300</span>
+          </div>
+          <svg class="acc-icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <div class="acc-panel">
+          <div class="acc-panel-inner">
+            <div class="code-card">
+              <div class="code-num">561320</div>
+              <div class="code-desc">Temporary Help Services</div>
+            </div>
+            <div class="code-card">
+              <div class="code-num">561300</div>
+              <div class="code-desc">Employment Services</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>ViraCore LLC · Virginia</div>
+  <div>© 2026 ViraCore</div>
+</footer>
+
+</body>
+</html>
