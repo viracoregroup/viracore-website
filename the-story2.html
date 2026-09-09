@@ -4,11 +4,6 @@
 <meta charset="UTF-8">
 <title>ViraCore — The Story</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:title" content="ViraCore — Whatever the need, we're already there.">
-<meta property="og:description" content="Full-spectrum facilities and vendor management for commercial and government clients.">
-<meta property="og:image" content="https://viracoregroup.com/og-image.png">
-<meta property="og:url" content="https://viracoregroup.com/">
-<meta name="twitter:card" content="summary_large_image">
 <style>
   :root{
     --black:#0A0A0A;
@@ -145,12 +140,10 @@
     width:100%;
     height:100%;
     object-fit:cover;
-    filter:grayscale(0%);
     transform:scale(1);
-    transition:filter 0.4s ease, transform 0.6s ease;
+    transition:transform 0.6s ease;
   }
   .photo-wrap:hover img{
-    filter:grayscale(100%);
     transform:scale(1.05);
   }
   .photo-placeholder{
@@ -205,6 +198,30 @@
     color:var(--gray);
     line-height:1.75;
     max-width:640px;
+  }
+  .contact-info{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-top:28px;
+  }
+  .contact-info a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:var(--black);
+    text-decoration:none;
+    font-size:14.5px;
+    font-weight:500;
+  }
+  .contact-info a:hover{color:var(--orange);}
+  .contact-info svg{
+    width:18px;
+    height:18px;
+    stroke:var(--black);
+    fill:none;
+    stroke-width:1.6;
+    flex-shrink:0;
   }
   .tags{
     display:flex;
@@ -276,8 +293,18 @@
     </div>
   </div>
   <div>
-    <div class="bio-title">Chief Executive Officer</div>
+    <div class="bio-title">Chief Executive Officer &amp; Co-Founder</div>
     <p class="bio-text">Benjimin is a U.S. Navy veteran with six years of service, where he served as a Supervisor and Training Technician within the Navy's medical technology sector — leading project management and technical operations in high-stakes environments. Since transitioning from active duty, he has built expertise in contract writing, bid analysis, and complex procurement navigation. He holds an MBA, an active Secret Security Clearance, and is a VCU graduate. Benjimin's SDVOSB eligibility and hands-on operational leadership anchor ViraCore's government contracting capability.</p>
+    <div class="contact-info">
+      <a href="mailto:benjimin@viracoregroup.com">
+        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        benjimin@viracoregroup.com
+      </a>
+      <a href="tel:+15404463230">
+        <svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+        (540) 446-3230
+      </a>
+    </div>
   </div>
 </div>
 
@@ -292,8 +319,18 @@
     </div>
   </div>
   <div>
-    <div class="bio-title">Co-Founder</div>
+    <div class="bio-title">President &amp; Co-Founder</div>
     <p class="bio-text">Kenneth brings a rare blend of operational and technical fluency to ViraCore. He spent several years supporting JPMorgan's data center operations as a Data Center Team Lead, followed by an extended run building and directing warehouse, logistics, and storefront operations for the world's largest sneaker and apparel retailer — managing large-scale personnel and multi-site, high-volume supply chains. He has also supported the FDIC on IT deployment and refresh programs, and worked in operational and personnel management with the CFPB across multiple financial institutions. A VCU graduate, Kenneth leads ViraCore's growth strategy, technology adoption, and client relationships.</p>
+    <div class="contact-info">
+      <a href="mailto:kenneth@viracoregroup.com">
+        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        kenneth@viracoregroup.com
+      </a>
+      <a href="tel:+15404249468">
+        <svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+        (540) 424-9468
+      </a>
+    </div>
   </div>
 </div>
 
