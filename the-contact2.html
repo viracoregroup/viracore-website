@@ -170,6 +170,24 @@
     letter-spacing:0.02em;
     cursor:pointer;
   }
+  .btn-submit:disabled{
+    opacity:0.6;
+    cursor:default;
+  }
+  #form-status{
+    display:none;
+    margin-top:20px;
+    font-size:14.5px;
+    line-height:1.6;
+  }
+  .form-status-success{
+    color:var(--white);
+  }
+  .form-status-error{
+    display:block;
+    color:#FF6B6B;
+    margin-top:16px;
+  }
 
   /* CHECKERBOARD ACCENT */
   .checker{
@@ -229,35 +247,77 @@
   </div>
 
   <div>
-    <form>
+    <form id="contact-form" action="https://formspree.io/f/mdeoylnk" method="POST">
+      <input type="hidden" name="_subject" value="New message from ViraCore website">
       <div class="field-grid">
         <div class="field">
           <label>Full Name</label>
-          <input type="text" placeholder="Your full name">
+          <input type="text" name="name" placeholder="Your full name" required>
         </div>
         <div class="field">
           <label>Email Address</label>
-          <input type="email" placeholder="example@youremail.com">
+          <input type="email" name="email" placeholder="example@youremail.com" required>
         </div>
         <div class="field">
           <label>Phone Number</label>
-          <input type="tel" placeholder="(123) 456 - 789">
+          <input type="tel" name="phone" placeholder="(123) 456 - 789">
         </div>
         <div class="field">
           <label>Subject</label>
-          <input type="text" placeholder="How can we help?">
+          <input type="text" name="subject" placeholder="How can we help?">
         </div>
       </div>
 
       <div class="field field-message">
         <label>Message</label>
-        <textarea placeholder="Write your message here..."></textarea>
+        <textarea name="message" placeholder="Write your message here..." required></textarea>
       </div>
 
-      <button type="submit" class="btn-submit">Send Message →</button>
+      <button type="submit" class="btn-submit" id="submit-btn">Send Message →</button>
+      <p id="form-status"></p>
     </form>
   </div>
 </div>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  const submitBtn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    status.className = '';
+    status.textContent = '';
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        form.reset();
+        form.style.display = 'none';
+        status.className = 'form-status-success';
+        status.textContent = "Message sent — we'll be in touch shortly.";
+        status.style.display = 'block';
+      } else {
+        response.json().then(data => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message →';
+          status.className = 'form-status-error';
+          status.textContent = (data.errors && data.errors.map(e => e.message).join(', ')) || 'Something went wrong — please try again or email us directly.';
+        });
+      }
+    }).catch(() => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Message →';
+      status.className = 'form-status-error';
+      status.textContent = 'Something went wrong — please try again or email us directly.';
+    });
+  });
+</script>
 
 <div class="checker">
   <div></div><div></div><div></div><div></div>
