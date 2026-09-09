@@ -176,17 +176,48 @@
   }
   #form-status{
     display:none;
-    margin-top:20px;
-    font-size:14.5px;
     line-height:1.6;
   }
   .form-status-success{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:16px;
+    padding:48px 0;
+  }
+  .form-status-success .status-icon{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    border:1.5px solid var(--orange);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .form-status-success .status-icon svg{
+    width:24px;
+    height:24px;
+    stroke:var(--orange);
+    fill:none;
+    stroke-width:2;
+  }
+  .form-status-success .status-title{
+    font-size:26px;
+    font-weight:900;
     color:var(--white);
+    letter-spacing:-0.01em;
+  }
+  .form-status-success .status-sub{
+    font-size:14.5px;
+    color:var(--gray);
+    max-width:360px;
   }
   .form-status-error{
     display:block;
     color:#FF6B6B;
     margin-top:16px;
+    font-size:14.5px;
   }
 
   /* CHECKERBOARD ACCENT */
@@ -274,8 +305,8 @@
       </div>
 
       <button type="submit" class="btn-submit" id="submit-btn">Send Message →</button>
-      <p id="form-status"></p>
     </form>
+    <p id="form-status"></p>
   </div>
 </div>
 
@@ -300,8 +331,8 @@
         form.reset();
         form.style.display = 'none';
         status.className = 'form-status-success';
-        status.textContent = "Message sent — we'll be in touch shortly.";
-        status.style.display = 'block';
+        status.innerHTML = '<div class="status-icon"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div><div class="status-title">Message sent</div><div class="status-sub">Thanks for reaching out — we\'ll be in touch shortly.</div>';
+        status.style.display = 'flex';
       } else {
         response.json().then(data => {
           submitBtn.disabled = false;
