@@ -182,36 +182,38 @@
     display:flex;
     flex-direction:column;
     align-items:flex-start;
-    gap:16px;
-    padding:48px 0;
+    gap:24px;
+    padding:20px 0;
   }
   .form-status-success .status-icon{
-    width:52px;
-    height:52px;
+    width:80px;
+    height:80px;
     border-radius:50%;
-    border:1.5px solid var(--orange);
+    border:2px solid var(--orange);
     display:flex;
     align-items:center;
     justify-content:center;
     flex-shrink:0;
   }
   .form-status-success .status-icon svg{
-    width:24px;
-    height:24px;
+    width:38px;
+    height:38px;
     stroke:var(--orange);
     fill:none;
     stroke-width:2;
   }
   .form-status-success .status-title{
-    font-size:26px;
+    font-size:clamp(46px, 5.5vw, 84px);
     font-weight:900;
+    line-height:1.02;
+    letter-spacing:-0.02em;
     color:var(--white);
-    letter-spacing:-0.01em;
   }
   .form-status-success .status-sub{
-    font-size:14.5px;
+    font-size:15px;
     color:var(--gray);
-    max-width:360px;
+    max-width:400px;
+    line-height:1.7;
   }
   .form-status-error{
     display:block;
