@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ViraCore — The Contact</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root{
+    --tan:#EDE5DA;
+    --black:#0A0A0A;
+    --white:#FFFFFF;
+    --orange:#FF7A3D;
+    --gray:#8A867E;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    background:var(--black);
+    color:var(--white);
+    font-family:'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* NAV */
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:28px 60px;
+    max-width:1400px;
+    margin:0 auto;
+  }
+  .logo{
+    font-weight:900;
+    font-size:20px;
+    letter-spacing:-0.01em;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .logo-img{
+    height:40px;
+    width:auto;
+    display:block;
+  }
+  .nav-links{display:flex;gap:36px;list-style:none;}
+  .nav-links a{
+    color:var(--white);
+    text-decoration:none;
+    font-size:14px;
+    opacity:0.7;
+  }
+  .nav-links a.active{opacity:1; color:var(--orange);}
+  .nav-links a:hover{opacity:1;}
+
+  /* MAIN */
+  .main{
+    max-width:1400px;
+    margin:0 auto;
+    padding:100px 60px 140px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:100px;
+    align-items:start;
+  }
+
+  .headline{
+    font-size:clamp(46px, 5.5vw, 84px);
+    font-weight:900;
+    line-height:1.02;
+    letter-spacing:-0.02em;
+    margin-bottom:28px;
+  }
+  .subtext{
+    font-size:15px;
+    color:var(--gray);
+    line-height:1.7;
+    max-width:400px;
+    margin-bottom:56px;
+  }
+
+  .email-block{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:36px;
+  }
+  .email-block svg{
+    width:22px;
+    height:22px;
+    stroke:var(--orange);
+    fill:none;
+    stroke-width:1.6;
+    flex-shrink:0;
+  }
+  .email-label{
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--gray);
+    margin-bottom:6px;
+  }
+  .email-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .email-row a{
+    color:var(--white);
+    font-weight:700;
+    font-size:17px;
+    text-decoration:none;
+  }
+  .email-row svg{
+    width:14px;
+    height:14px;
+    stroke:var(--orange);
+    fill:none;
+    stroke-width:2;
+  }
+
+  .divider{
+    border-top:1px solid rgba(255,255,255,0.14);
+    max-width:400px;
+  }
+
+  /* FORM */
+  form{width:100%;}
+  .field-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    margin-bottom:24px;
+  }
+  .field label{
+    display:block;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--gray);
+    margin-bottom:10px;
+  }
+  .field input, .field textarea{
+    width:100%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid rgba(255,255,255,0.25);
+    color:var(--white);
+    font-size:15px;
+    padding:10px 0;
+    font-family:inherit;
+    outline:none;
+  }
+  .field input::placeholder, .field textarea::placeholder{color:#5A5750;}
+  .field input:focus, .field textarea:focus{border-bottom-color:var(--orange);}
+  .field-message{margin-bottom:44px;}
+  .field-message textarea{resize:none; min-height:90px;}
+
+  .btn-submit{
+    width:100%;
+    background:var(--white);
+    color:var(--black);
+    border:none;
+    padding:18px;
+    border-radius:999px;
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:0.02em;
+    cursor:pointer;
+  }
+  .btn-submit:disabled{
+    opacity:0.6;
+    cursor:default;
+  }
+  #form-status{
+    display:none;
+    line-height:1.6;
+  }
+  .form-status-success{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:24px;
+    padding:20px 0;
+  }
+  .form-status-success .status-icon{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    border:2px solid var(--orange);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .form-status-success .status-icon svg{
+    width:38px;
+    height:38px;
+    stroke:var(--orange);
+    fill:none;
+    stroke-width:2;
+  }
+  .form-status-success .status-title{
+    font-size:clamp(46px, 5.5vw, 84px);
+    font-weight:900;
+    line-height:1.02;
+    letter-spacing:-0.02em;
+    color:var(--white);
+  }
+  .form-status-success .status-sub{
+    font-size:15px;
+    color:var(--gray);
+    max-width:400px;
+    line-height:1.7;
+  }
+  .form-status-error{
+    display:block;
+    color:#FF6B6B;
+    margin-top:16px;
+    font-size:14.5px;
+  }
+
+  /* CHECKERBOARD ACCENT */
+  .checker{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:64px;
+    height:64px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr;
+    z-index:5;
+  }
+  .checker div:nth-child(1){background:var(--tan);}
+  .checker div:nth-child(2){background:var(--black);}
+  .checker div:nth-child(3){background:var(--black);}
+  .checker div:nth-child(4){background:var(--white);}
+
+  @media (max-width:900px){
+    .main{grid-template-columns:1fr; gap:60px; padding:60px 24px 100px;}
+    nav{grid-template-columns:1fr; gap:16px; padding:24px;}
+    .nav-links{justify-content:center; flex-wrap:wrap;}
+    .field-grid{grid-template-columns:1fr;}
+  }
+
+  @media (max-width:640px){
+    nav{
+      flex-direction:column;
+      gap:14px;
+      padding:20px 24px;
+    }
+    .nav-links{
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:10px 18px;
+      font-size:13px;
+    }
+    .nav-links li{
+      margin:2px 6px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><img src="White_NB.png" alt="ViraCore" class="logo-img"></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="services.html">Our Services</a></li>
+    <li><a href="story.html">Our Story</a></li>
+    <li><a href="purpose.html">Our Purpose</a></li>
+    <li><a href="contact.html" class="active">Our Contact</a></li>
+  </ul>
+</nav>
+
+<div class="main">
+  <div>
+    <h1 class="headline">Let's get<br>started.</h1>
+    <p class="subtext">Ready to work with ViraCore? Reach out and let us know what you need. We're already there.</p>
+
+    <div class="email-block">
+      <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+      <div>
+        <div class="email-label">Send Us An Email</div>
+        <div class="email-row">
+          <a href="mailto:info@viracoregroup.com">info@viracoregroup.com</a>
+          <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+  </div>
+
+  <div>
+    <form id="contact-form" action="https://formspree.io/f/mdeoylnk" method="POST">
+      <input type="hidden" name="_subject" value="New message from ViraCore website">
+      <div class="field-grid">
+        <div class="field">
+          <label>Full Name</label>
+          <input type="text" name="name" placeholder="Your full name" required>
+        </div>
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" name="email" placeholder="example@youremail.com" required>
+        </div>
+        <div class="field">
+          <label>Phone Number</label>
+          <input type="tel" name="phone" placeholder="(123) 456 - 7890">
+        </div>
+        <div class="field">
+          <label>Subject</label>
+          <input type="text" name="subject" placeholder="How can we help?">
+        </div>
+      </div>
+
+      <div class="field field-message">
+        <label>Message</label>
+        <textarea name="message" placeholder="Write your message here..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submit-btn">Send Message →</button>
+    </form>
+    <p id="form-status"></p>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+  const submitBtn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    status.className = '';
+    status.textContent = '';
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        form.reset();
+        form.style.display = 'none';
+        status.className = 'form-status-success';
+        status.innerHTML = '<div class="status-icon"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div><div class="status-title">Message sent</div><div class="status-sub">Thanks for reaching out — we\'ll be in touch shortly.</div>';
+        status.style.display = 'flex';
+      } else {
+        response.json().then(data => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message →';
+          status.className = 'form-status-error';
+          status.textContent = (data.errors && data.errors.map(e => e.message).join(', ')) || 'Something went wrong — please try again or email us directly.';
+        });
+      }
+    }).catch(() => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Message →';
+      status.className = 'form-status-error';
+      status.textContent = 'Something went wrong — please try again or email us directly.';
+    });
+  });
+</script>
+
+<div class="checker">
+  <div></div><div></div><div></div><div></div>
+</div>
+
+</body>
+</html>
