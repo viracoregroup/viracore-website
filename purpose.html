@@ -186,6 +186,14 @@
     font-weight:700;
     letter-spacing:0.02em;
     cursor:pointer;
+    display:inline-block;
+    text-decoration:none;
+    transition:background 0.2s ease, color 0.2s ease;
+  }
+  .btn-outline:hover,
+  .btn-outline:active{
+    background:var(--black);
+    color:var(--white);
   }
 
   .values-grid{
@@ -315,13 +323,13 @@
       <h2>Our values</h2>
       <div class="values-top-right">
         <p>Four principles that drive how ViraCore operates, delivers, and grows — on every contract, every time.</p>
-        <button class="btn-outline">Contact us</button>
+        <a href="contact.html" class="btn-outline">Contact us</a>
       </div>
     </div>
 
     <div class="values-grid">
       <div class="value-cell">
-        <svg class="value-icon" viewBox="0 0 48 48">
+        <svg class="value-icon" viewBox="0 0 48 48" style="stroke:var(--orange);">
           <path d="M10 20a14 14 0 0 1 24-8"/>
           <path d="M34 8v6h-6"/>
           <path d="M38 28a14 14 0 0 1-24 8"/>
@@ -333,16 +341,16 @@
 
       <div class="value-cell">
         <svg class="value-icon" viewBox="0 0 48 48">
-          <circle cx="17" cy="15" r="9"/>
-          <circle cx="29" cy="15" r="9"/>
-          <circle cx="23" cy="27" r="9"/>
+          <circle cx="17" cy="15" r="9" style="stroke:var(--orange);"/>
+          <circle cx="29" cy="15" r="9" style="stroke:#3B82F6;"/>
+          <circle cx="23" cy="27" r="9" style="stroke:#22C55E;"/>
         </svg>
         <h3>Unity</h3>
         <p>One call, one agreement, one invoice. We show up as one so you never juggle vendors again.</p>
       </div>
 
       <div class="value-cell">
-        <svg class="value-icon" viewBox="0 0 48 48">
+        <svg class="value-icon" viewBox="0 0 48 48" style="stroke:#EAB308;">
           <path d="M26 4L12 26h10l-4 18 18-24H26z"/>
         </svg>
         <h3>Speed</h3>
@@ -350,7 +358,7 @@
       </div>
 
       <div class="value-cell">
-        <svg class="value-icon" viewBox="0 0 48 48">
+        <svg class="value-icon" viewBox="0 0 48 48" style="stroke:#22C55E;">
           <circle cx="24" cy="24" r="16"/>
           <path d="M16 24l6 6 12-13"/>
         </svg>
